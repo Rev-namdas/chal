@@ -59,6 +59,10 @@ def stockresult(request, sid):
             sellbosta   += each.bosta
             sold        += each.price
 
+    products.productamount  = totalamount
+    products.productbosta   = totalbosta
+
+    products.save()
 
     remainamount    = totalamount - sellamount
     remainbosta     = totalbosta - sellbosta
