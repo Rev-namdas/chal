@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block navblock %}
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'sell' %}">Sell Stocks</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'addstock' %}">Add Stock</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'addproduct' %}">Add Product</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'logout' %}">Logout</a>
+    </li>
+{% endblock navblock %}
+
+{% block content %}
+{% load static %}
+<div class="container">
+
+    <h1 style="color: white; text-align: center;">Stocks Dashboard</h1>
+
+    <div class="card" style="width: 100%">
+        <div class="card-body">
+            <div class="row">
+            {% for each in products %}
+            <div class="card col-md-4 shadow p-3 bg-white rounded" style="width: 100%%;">
+                
+                <img src="{% static 'img/rice.jpg' %}" class="card-img-top" alt="Rice">
+                <div class="card-body">
+                    <h5 class="card-title">{{ each.product }}</h5>
+                    <a href="{% url 'stockresult' each.id %}" class="btn btn-primary">Stock</a>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

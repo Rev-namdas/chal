@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block navblock %}
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'sell' %}">Sell Stocks</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'addstock' %}">Add Stock</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'stocks' %}">Stocks</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'addproduct' %}">Add Product</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'logout' %}">Logout</a>
+    </li>
+{% endblock navblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+
+                <div class="row">
+                    <h2 class="col-md-6">{{ remain.product }}</h2>
+                    <h2 class="col-md-6">- Stock Amount: {{ remain.ramount }} - Stock Bosta: {{ remain.rbosta }} </h2>
+                </div>
+
+                <form method="POST"> {% csrf_token %}
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputAddress2">Customer Name</label>
+                            <input name="customer" type="text" class="form-control" id="inputAddress2">
+                       </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Amount</label>
+                            <input name="amount" type="text" class="form-control" id="inputPassword4" placeholder="1 kg">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="inputAddress">How many bosta</label>
+                            <input name="bosta" type="text" class="form-control" id="inputAddress">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="inputAddress">Price</label>
+                            <input name="price" type="text" class="form-control" id="inputAddress">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputZip">Press to save</label>
+                            <button type="submit" class="form-control btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

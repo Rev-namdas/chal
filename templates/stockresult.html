@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block navblock %}
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'sell' %}">Sell Stocks</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'addstock' %}">Add Stock</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'stocks' %}">Stocks</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'addproduct' %}">Add Product</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href="{% url 'logout' %}">Logout</a>
+    </li>
+{% endblock navblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+                 <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Rice</th>
+                        <th scope="col">Remaining Amount (kg)</th>
+                        <th scope="col">Remaining Bosta</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <th scope="row">{{ remaining.product }}</th>
+                            <th> {{ remaining.ramount }} </th>
+                            <th> {{ remaining.rbosta }} </th>
+                        </tr>
+                   
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+                <h3>Stocked</h3>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Rice</th>
+                        <th scope="col">Stocked By</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount (kg)</th>
+                        <th scope="col">Bosta</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    
+                        {% for eachstock in stocks %}
+                            {% if eachstock.rice == products.product%}
+                                <tr>
+                                    <th scope="row">{{ eachstock.rice }}</th>
+                                    <td>{{ eachstock.stockedby }}</td>
+                                    <td>{{ eachstock.time|date:'Y-m-d h:i a'}}</td>
+                                    <td>{{ eachstock.amount }}</td>
+                                    <td>{{ eachstock.bosta }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                        <tr>
+                            <th scope="row"></th>
+                            <td></td>
+                            <th>Total</th>
+                            <th>{{ products.productamount }}</th>
+                            <th>{{ products.productbosta }}</th>
+                        </tr>
+                   
+                    </tbody>
+                </table>
+            </div>
+        </div>       
+
+        <br>
+
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+                <h3>Sold</h3>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Rice</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount (kg)</th>
+                        <th scope="col">Bosta</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for each in sells %}
+                            {% if each.rice == products.product %}
+                                <tr>
+                                    <th scope="row">{{ each.rice }}</th>
+                                    <td>{{ each.customer }}</td>
+                                    <td>{{ each.time|date:'d-M-D-Y, h:i a'}}</td>
+                                    <td>{{ each.amount }}</td>
+                                    <td>{{ each.bosta }}</td>
+                                    <td>{{ each.price }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                        <tr>
+                            <th scope="row"></th>
+                            <td></td>
+                            <th>Total</th>
+                            <th>{{ sellamount }}</th>
+                            <th>{{ sellbosta }}</th>
+                            <th>{{ sold }} Tk</th>
+                        </tr>
+                   
+                    </tbody>
+                </table>
+            </div>
+        </div>  
+
+        <br>
+
+    </div>
+{% endblock content %}

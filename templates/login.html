@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block navblock %}
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href=" {% url 'signup' %}">Sign up</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="navlink" href=" {% url 'signin' %}">Sign in</a>
+    </li>
+{% endblock navblock %}
