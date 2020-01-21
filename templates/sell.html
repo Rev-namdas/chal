@@ -16,10 +16,18 @@
 {% endblock navblock %}
 
 {% block content %}
-    
+
     <div class="container">
         <div class="card" style="width: 100%">
             <div class="card-body">
+                
+                <form method="POST"> {% csrf_token %}
+                    <div class="form-row">
+                        <input name="search" class="form-control col-md-11" type="text" placeholder="Search">
+                        <button type="submit" class="form-control btn btn-primary col-md-1">Search</button>
+                    </div>
+                </form>
+
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -28,13 +36,21 @@
                     </tr>
                     </thead>
                     <tbody>
-                    
-                        {% for each in products %}
-                            <tr>
-                                <th scope="row">{{ each.product }}</th>
-                                <td><a href="{% url 'sellstock' each.id %}" class="btn btn-primary">Sell</a></td>
-                            </tr>
-                        {% endfor %}
+                        {% if searchedproducts %}
+                            {% for each in searchedproducts %}
+                                <tr>
+                                    <th scope="row">{{ each.product }}</th>
+                                    <td><a href="{% url 'sellstock' each.id %}" class="btn btn-primary">Sell</a></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            {% for each in products %}
+                                <tr>
+                                    <th scope="row">{{ each.product }}</th>
+                                    <td><a href="{% url 'sellstock' each.id %}" class="btn btn-primary">Sell</a></td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
 
                         
                    

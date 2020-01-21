@@ -64,9 +64,8 @@ def stockresult(request, sid):
     remainbosta     = totalbosta - sellbosta
 
     remaining.ramount = remainamount
-    remaining.save()
-
     remaining.rbosta = remainbosta
+
     remaining.save()
 
     return render(request, 'stockresult.html', 
@@ -84,7 +83,7 @@ def sellstock(request, sid):
         bosta = request.POST['bosta']
         price = request.POST['price']
 
-        sell = sellStockModel(pk=sid, customer = name, rice = products.product, amount = amount, bosta = bosta, time = datetime.datetime.now(), price = price)
+        sell = sellStockModel(customer = name, rice = products.product, amount = amount, bosta = bosta, time = datetime.datetime.now(), price = price)
         
         if sell is not None:
             sell.save()
@@ -96,7 +95,6 @@ def sellstock(request, sid):
 
             if remaining is not None:
                 remaining.save()
-                remaining.refresh_from_db()
                 return redirect('stocks')
 
     return render(request, 'sellstock.html', {'products' : products, 'remain' : remain})
@@ -105,7 +103,14 @@ def sellstock(request, sid):
 def sell(request):
     products = productsModel.objects.all()
 
-    return render(request, 'sell.html', {'products' : products})
+    if request.method == 'POST':
+        searched = request.POST['search']
+    else:
+        searched = ''
+
+    searchedproducts = productsModel.objects.filter(product__contains = searched)
+
+    return render(request, 'sell.html', {'products' : products, 'searchedproducts' : searchedproducts})
 
 
 def addproduct(request):
