@@ -36,6 +36,7 @@ def stockresult(request, sid):
     stocks = stockModel.objects.all()
     remaining = remainingModel.objects.get(pk=sid)
     sells = sellStockModel.objects.all()
+    date = None
 
     totalamount = 0
     totalbosta = 0
@@ -46,6 +47,10 @@ def stockresult(request, sid):
 
     remainamount = 0
     remainbosta = 0
+    
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        print(date[3:5])
 
     for each in stocks:
         if each.rice == products.product:
@@ -58,6 +63,8 @@ def stockresult(request, sid):
             sellamount  += each.amount
             sellbosta   += each.bosta
             sold        += each.price
+
+        
 
     products.productamount  = totalamount
     products.productbosta   = totalbosta
@@ -74,7 +81,7 @@ def stockresult(request, sid):
 
     return render(request, 'stockresult.html', 
         {'products' : products, 'stocks' : stocks, 'remaining' : remaining, 'sells' : sells, 
-        'sellamount' : sellamount, 'sellbosta' : sellbosta, 'sold' : sold})
+        'sellamount' : sellamount, 'sellbosta' : sellbosta, 'sold' : sold, 'date' : date})
 
 
 def sellstock(request, sid):
@@ -133,29 +140,86 @@ def addproduct(request):
     return render(request, 'addproduct.html')
 
 
-# def sellstock(request, sid):
-#     products = productsModel.objects.get(pk=sid)
-#     remain  = remainingModel.objects.get(pk=sid)
+def report(request):
+    startingdate    = "2020-01-01"
+    finishingdate   = "2050-01-01"
 
-#     if request.method == 'POST':
-#         name = request.POST['customer']
-#         amount = request.POST['amount']
-#         bosta = request.POST['bosta']
-#         price = request.POST['price']
+    if request.method == 'POST':
+        fromdate    = request.POST['fromdate']
+        frommonth   = request.POST['frommonth']
+        fromyear    = request.POST['fromyear']
 
-#         sell = sellStockModel(customer = name, rice = products.product, amount = amount, bosta = bosta, time = datetime.datetime.now(), price = price)
+        todate      = request.POST['todate']
+        tomonth     = request.POST['tomonth']
+        toyear      = request.POST['toyear']
+
+        nfmonth = ''
+
+        if frommonth == 'January':
+            nfmonth = '01'
+        elif frommonth == 'February':
+            nfmonth = '02'
+        elif frommonth == 'March':
+            nfmonth = '03'
+        elif frommonth == 'April':
+            nfmonth = '04'
+        elif frommonth == 'May':
+            nfmonth = '05'
+        elif frommonth == 'June':
+            nfmonth = '06'
+        elif frommonth == 'July':
+            nfmonth = '07'
+        elif frommonth == 'August':
+            nfmonth = '08'
+        elif frommonth == 'September':
+            nfmonth = '09'
+        elif frommonth == 'October':
+            nfmonth = '10'
+        elif frommonth == 'November':
+            nfmonth = '11'
+        elif frommonth == 'December':
+            nfmonth = '12'
+
+
+        ntmonth = ''
+
+        if tomonth == 'January':
+            ntmonth = '01'
+        elif tomonth == 'February':
+            ntmonth = '02'
+        elif tomonth == 'March':
+            ntmonth = '03'
+        elif tomonth == 'April':
+            ntmonth = '04'
+        elif tomonth == 'May':
+            ntmonth = '05'
+        elif tomonth == 'June':
+            ntmonth = '06'
+        elif tomonth == 'July':
+            ntmonth = '07'
+        elif tomonth == 'August':
+            ntmonth = '08'
+        elif tomonth == 'September':
+            ntmonth = '09'
+        elif tomonth == 'October':
+            ntmonth = '10'
+        elif tomonth == 'November':
+            ntmonth = '11'
+        elif tomonth == 'December':
+            ntmonth = '12'
+
+        if fromyear and frommonth and fromdate:
+            startingdate    = fromyear + "-" + nfmonth + "-" + fromdate
+        else:
+            startingdate    = "2020-01-01"
+
+        if toyear and tomonth and todate:
+            finishingdate   = toyear + "-" + ntmonth + "-" + str(int(todate) + 1)
+        else:
+            finishingdate   = "2050-01-01"
         
-#         if sell is not None:
-#             sell.save()
-            
-#             products.productamount -= int(amount)
-#             products.productbosta  -= int(bosta)
+        
 
-#             remaining = remainingModel(pk=sid, product = products.product, ramount = products.productamount, rbosta = products.productbosta)
+    sells = sellStockModel.objects.filter(time__range=[startingdate, finishingdate]).order_by('time')
 
-#             if remaining is not None:
-#                 remaining.save()
-#                 remaining.refresh_from_db()
-#                 return redirect('stocks')
-
-#     return render(request, 'sellstock.html', {'products' : products, 'remain' : remain})
+    return render(request, 'report.html', {'sells' : sells})

@@ -20,6 +20,100 @@
 
 {% block content %}
     <div class="container">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
+
+                <form method="POST"> {% csrf_token %}
+                    
+                <div class="container">
+                    <div class="form-group row">
+                        <label class="col-md-1 col-sm-1 col-xs-1" for="inputAddress2">From</label>
+                        <input name="fromdate" type="text" class="form-control col-md-1 col-sm-1 col-xs-1 border border-primary" id="inputAddress2" placeholder="Date: 21">
+                        <select name="frommonth" id="inputState" class="form-control col-md-2 col-sm-2 col-xs-2 border border-primary">
+                            <option selected>Choose Month</option>
+                                <option> January </option>
+                                <option> February </option>
+                                <option> March </option>
+                                <option> April </option>
+                                <option> May </option>
+                                <option> June </option>
+                                <option> July </option>
+                                <option> August </option>
+                                <option> September </option>
+                                <option> October </option>
+                                <option> November </option>
+                                <option> December </option>
+                        </select>
+                        <input name="fromyear" type="text" class="form-control col-md-1 col-sm-1 col-xs-1 border border-primary" id="inputAddress2" placeholder="2020">
+
+                        <br>
+
+                        <label class="col-md-1 col-sm-1 col-xs-1" for="inputAddress2">To</label>
+                        <input name="todate" type="text" class="form-control col-md-1 col-sm-1 col-xs-1 border border-success" id="inputAddress2" placeholder="Date: 22">
+                        <select name="tomonth" id="inputState" class="form-control col-md-2 col-sm-2 col-xs-2 border border-success">
+                            <option selected>Choose Month</option>
+                                <option> January </option>
+                                <option> February </option>
+                                <option> March </option>
+                                <option> April </option>
+                                <option> May </option>
+                                <option> June </option>
+                                <option> July </option>
+                                <option> August </option>
+                                <option> September </option>
+                                <option> October </option>
+                                <option> November </option>
+                                <option> December </option>
+                        </select>
+                        <input name="toyear" type="text" class="form-control col-md-1 col-sm-1 col-xs-1 border border-success" id="inputAddress2" placeholder="2020">
+                        <button type="submit" class="form-control btn btn-success col-md-2 col-sm-2 col-xs-2">Search</button>
+                    </div>
+                </div>    
+                    
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Rice</th>
+                            <th scope="col">Sold to</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Amount (kg)</th>
+                            <th scope="col">Bosta</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                            {% for each in sells %}
+                                <tr>
+                                    <th scope="row">{{ each.rice }}</th>
+                                    <td>{{ each.customer }}</td>
+                                    <td>{{ each.time|date:'d-M-D-Y, h:i a' }}</td>
+                                    <td>{{ each.amount }}</td>
+                                    <td>{{ each.bosta }}</td>
+                                </tr>
+                            {% endfor %}
+    
+                            {% comment %} <tr>
+                                <th scope="row"></th>
+                                <td></td>
+                                <th>Total</th>
+                                <th>{{ products.productamount }}</th>
+                                <th>{{ products.productbosta }}</th>
+                            </tr> {% endcomment %}
+                       
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% comment %} 
+{% block content %}
+    <div class="container">
         <div class="card" style="width: 100%">
             <div class="card-body">
             <div class="table-responsive">
@@ -180,4 +274,4 @@
         <br>
 
     </div>
-{% endblock content %}
+{% endblock content %} {% endcomment %}
