@@ -35,24 +35,16 @@
             <div class="card-body">
 
                 <form method="POST"> {% csrf_token %}
-
-                <div class="container">
-                    <div class="form-group row">
-                        <div class="form-group col-md-4">
-                            <label >From</label>
-                            <input class="border border-primary" type="date" name="date1" style="padding: 5px; width: 280px;">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label >To</label>
-                            <input class="border border-primary" type="date" name="date2" style="padding: 5px; width: 280px;">
-                        </div>
-                        <div class="form-group col-md-4">
+                    
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <input name="search" type="text" class="form-control" id="inputAddress2" placeholder="Search Product / Person">
+                       </div>
+                       <div class="form-group col-md-2">
                             <button type="submit" class="form-control btn btn-success">Search</button>
                         </div>
                     </div>
-                </div>
-                    
-                    
+
                 </form>
 
                 <div class="table-responsive">
@@ -68,7 +60,8 @@
                         </thead>
                         <tbody>
                         
-                            {% for each in sells %}
+                        {% if sellsrice %}
+                            {% for each in sellsrice %}
                                 <tr>
                                     <th scope="row">{{ each.rice }}</th>
                                     <td>{{ each.customer }}</td>
@@ -77,14 +70,34 @@
                                     <td>{{ each.bosta }}</td>
                                 </tr>
                             {% endfor %}
-    
                             <tr>
                                 <th scope="row"></th>
                                 <td></td>
                                 <th>Total</th>
-                                <th>{{ totalamount }}</th>
-                                <th>{{ totalbosta }}</th>
+                                <th>{{ rtotalamount }}</th>
+                                <th>{{ rtotalbosta }}</th>
                             </tr>
+                        {% endif %}
+                        
+                        {% if sellscustomer %}
+                            {% for each in sellscustomer %}
+                                <tr>
+                                    <th scope="row">{{ each.rice }}</th>
+                                    <td>{{ each.customer }}</td>
+                                    <td>{{ each.time|date:'d-M-D-Y, h:i a' }}</td>
+                                    <td>{{ each.amount }}</td>
+                                    <td>{{ each.bosta }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <th scope="row"></th>
+                                <td></td>
+                                <th>Total</th>
+                                <th>{{ ctotalamount }}</th>
+                                <th>{{ ctotalbosta }}</th>
+                            </tr>
+                        {% endif %}
+                            
                        
                         </tbody>
                     </table>

@@ -167,4 +167,36 @@ def report(request):
         totalamount += each.amount
         totalbosta  += each.bosta
 
-    return render(request, 'report.html', {'sells' : sells, 'totalamount' : totalamount, 'totalbosta' : totalbosta})
+    return render(request, 'report.html', 
+        {'sells' : sells, 'totalamount' : totalamount, 'totalbosta' : totalbosta})
+
+
+def productwisereport(request):
+    rtotalamount = 0
+    rtotalbosta  = 0
+    ctotalamount = 0
+    ctotalbosta  = 0
+
+    if request.method == 'POST':
+        searched = request.POST['search']
+    else:
+        searched = ''
+
+    sellsrice       = sellStockModel.objects.filter(rice__contains = searched).order_by('time')
+    sellscustomer   = sellStockModel.objects.filter(customer__contains = searched).order_by('time')
+
+
+    if sellsrice:
+        for each in sellsrice:
+            rtotalamount += each.amount
+            rtotalbosta  += each.bosta
+        return render(request, 'productwisereport.html',
+            {'sellsrice' : sellsrice, 'rtotalamount' : rtotalamount, 'rtotalbosta' : rtotalbosta})
+
+    if sellscustomer:
+        for each in sellscustomer:
+            ctotalamount += each.amount
+            ctotalbosta  += each.bosta
+        return render(request, 'productwisereport.html',
+            {'sellscustomer' : sellscustomer, 'ctotalamount' : ctotalamount, 'ctotalbosta' : ctotalbosta})
+            

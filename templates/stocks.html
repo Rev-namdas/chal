@@ -11,7 +11,15 @@
         <a class="nav-link" id="navlink" href="{% url 'addproduct' %}">Add Product</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="navlink" href="{% url 'report' %}">Report</a>
+        <div class="dropleft">
+            <a class="nav-link dropdown-toggle" id="navlink"  
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report</a>
+    
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a id="navlink" class="dropdown-item" href="{% url 'report' %}">Total</a>
+                <a id="navlink" class="dropdown-item" href="{% url 'productwisereport' %}">Product Based</a>
+            </div>
+        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" id="navlink" href="{% url 'logout' %}">Logout</a>
@@ -28,7 +36,7 @@
         <div class="card-body">
             <div class="row">
             {% for each in products %}
-            <div class="card col-md-4 shadow p-3 bg-white rounded" style="width: 100%%;">
+            <div class="card col-md-4 shadow p-3 bg-white rounded" style="width: 100%;">
                 
                 <img src="{% static 'img/rice.jpg' %}" class="card-img-top" alt="Rice">
                 <div class="card-body">
