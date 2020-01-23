@@ -24,51 +24,23 @@
             <div class="card-body">
 
                 <form method="POST"> {% csrf_token %}
-                    
+
                 <div class="container">
                     <div class="form-group row">
-                        <label class="col-md-1 col-sm-1 col-xs-1" for="inputAddress2">From</label>
-                        <input name="fromdate" type="text" class="form-control col-md-1 col-sm-1 col-xs-1 border border-primary" id="inputAddress2" placeholder="Date: 21">
-                        <select name="frommonth" id="inputState" class="form-control col-md-2 col-sm-2 col-xs-2 border border-primary">
-                            <option selected>Choose Month</option>
-                                <option> January </option>
-                                <option> February </option>
-                                <option> March </option>
-                                <option> April </option>
-                                <option> May </option>
-                                <option> June </option>
-                                <option> July </option>
-                                <option> August </option>
-                                <option> September </option>
-                                <option> October </option>
-                                <option> November </option>
-                                <option> December </option>
-                        </select>
-                        <input name="fromyear" type="text" class="form-control col-md-1 col-sm-1 col-xs-1 border border-primary" id="inputAddress2" placeholder="2020">
-
-                        <br>
-
-                        <label class="col-md-1 col-sm-1 col-xs-1" for="inputAddress2">To</label>
-                        <input name="todate" type="text" class="form-control col-md-1 col-sm-1 col-xs-1 border border-success" id="inputAddress2" placeholder="Date: 22">
-                        <select name="tomonth" id="inputState" class="form-control col-md-2 col-sm-2 col-xs-2 border border-success">
-                            <option selected>Choose Month</option>
-                                <option> January </option>
-                                <option> February </option>
-                                <option> March </option>
-                                <option> April </option>
-                                <option> May </option>
-                                <option> June </option>
-                                <option> July </option>
-                                <option> August </option>
-                                <option> September </option>
-                                <option> October </option>
-                                <option> November </option>
-                                <option> December </option>
-                        </select>
-                        <input name="toyear" type="text" class="form-control col-md-1 col-sm-1 col-xs-1 border border-success" id="inputAddress2" placeholder="2020">
-                        <button type="submit" class="form-control btn btn-success col-md-2 col-sm-2 col-xs-2">Search</button>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label >From</label>
+                            <input class="border border-primary" type="date" name="date1">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label >To</label>
+                            <input class="border border-primary" type="date" name="date2">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <button type="submit" class="form-control btn btn-success">Search</button>
+                        </div>
                     </div>
-                </div>    
+                </div>
+                    
                     
                 </form>
 
@@ -95,13 +67,13 @@
                                 </tr>
                             {% endfor %}
     
-                            {% comment %} <tr>
+                            <tr>
                                 <th scope="row"></th>
                                 <td></td>
                                 <th>Total</th>
-                                <th>{{ products.productamount }}</th>
-                                <th>{{ products.productbosta }}</th>
-                            </tr> {% endcomment %}
+                                <th>{{ totalamount }}</th>
+                                <th>{{ totalbosta }}</th>
+                            </tr>
                        
                         </tbody>
                     </table>

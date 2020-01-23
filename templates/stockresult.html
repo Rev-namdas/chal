@@ -49,28 +49,8 @@
 
         <div class="card" style="width: 100%">
             <div class="card-body">
-    
-                <form method="POST"> {% csrf_token %}
-                    
-                    <div class="form-row">
-                        <div class="form-group col-md-9">
-                            <h3 class="col-md-10 text-primary">Stocked</h3>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <input name="date" class="border border-primary" id="datepicker" placeholder="Search By Date"/>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                    </div>
-                            
-                        <script>
-                            $('#datepicker').datepicker({
-                                uiLibrary: 'bootstrap'
-                            });
-                        </script>
-                </form>
 
+                <h3 class="col-md-10 text-primary">Stocked</h3>
                 <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -115,27 +95,22 @@
         <div class="card" style="width: 100%">
             <div class="card-body">
 
-                <form method="POST"> {% csrf_token %}
+                {% comment %} <form method="POST"> {% csrf_token %}
                     
                     <div class="form-row">
                         <div class="form-group col-md-9">
-                            <h3 class="col-md-10 text-primary">Sold</h3>
                         </div>
-                        <div class="form-group col-md-2">
-                            <input name="date" class="border border-primary form-input" id="datepicker1" placeholder="Search By Date"/>
-                        </div>
+                        <input class="border border-primary form-group col-md-2" type="date" name="date2">
                         <div class="form-group col-md-1">
                             <button type="submit" class="form-control btn btn-primary">Search</button>
                         </div>
                     </div>
                             
-                        <script>
-                            $('#datepicker1').datepicker({
-                                uiLibrary: 'bootstrap'
-                            });
-                        </script>
-                </form>
 
+                </form> {% endcomment %}
+
+                <h3 class="col-md-10 text-primary">Sold</h3>
+                
                 <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
