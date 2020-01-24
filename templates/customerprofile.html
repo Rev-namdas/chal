@@ -46,7 +46,7 @@
                             <label >To</label>
                             <input class="border border-primary" type="date" name="date2" style="padding: 5px; width: 280px;">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-4 col-sm-4">
                             <button type="submit" class="form-control btn btn-success">Search</button>
                         </div>
                     </div>
@@ -64,6 +64,7 @@
                             <th scope="col">Date</th>
                             <th scope="col">Amount (kg)</th>
                             <th scope="col">Bosta</th>
+                            <th scope="col">Print</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -75,6 +76,9 @@
                                     <td>{{ each.time|date:'d-M-D-Y, h:i a' }}</td>
                                     <td>{{ each.amount }}</td>
                                     <td>{{ each.bosta }}</td>
+                                    <td>
+                                        <a class="form-control btn btn-primary" href="{% url 'customerpdf' each.id %}">Print</a>
+                                    </td>
                                 </tr>
                             {% endfor %}
     

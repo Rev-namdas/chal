@@ -33,5 +33,7 @@ urlpatterns = [
     path('addproduct/', addstocks.addproduct, name="addproduct"),
     path('report/', addstocks.report, name="report"),
     path('producwisereport/', addstocks.productwisereport, name="productwisereport"),
-    path('customerprofile/<cid>', addstocks.customerprofile, name="customerprofile")
+    path('customerprofile/<cid>', addstocks.customerprofile, name="customerprofile"),
+    path('reportpdf/', addstocks.reportpdf, name="reportpdf"),
+    path('customerpdf/<cusid>', addstocks.customerpdf, name="customerpdf")
 ]

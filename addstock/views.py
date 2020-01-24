@@ -3,9 +3,12 @@ from django.contrib.auth.decorators import login_required
 from addstock.models import stockModel, productsModel, sellStockModel, remainingModel
 from datetime import datetime
 from datetime import timedelta
+import xhtml2pdf
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from io import BytesIO
+from django.http import HttpResponse
 
-
-# Create your views here.
 
 @login_required
 def addstock(request):
@@ -248,3 +251,61 @@ def customerprofile(request, cid):
     return render(request, 'customerprofile.html',
             {'sells' : sells, 'totalamount' : totalamount, 'totalbosta' : totalbosta})
             
+
+def reportpdf(request):
+
+    totalamount = 0
+    totalbosta  = 0
+
+    sells = sellStockModel.objects.all().order_by('time')
+
+    for each in sells:
+        totalamount += each.amount
+        totalbosta  += each.bosta
+
+    data = {
+        'sells' : sells,
+        'totalamount' : totalamount,
+        'totalbosta' : totalbosta
+    }
+
+    template = get_template('reportpdf.html')
+    dataa = template.render(data)
+    response = BytesIO()
+
+    pdfPage = pisa.pisaDocument(BytesIO(dataa.encode("UTF-8")), response)
+
+    if not pdfPage.err:
+        return HttpResponse(response.getvalue(), content_type="application/pdf")
+    else:
+        return HttpResponse("Error")
+
+
+def customerpdf(request, cusid):
+    
+    customer = sellStockModel.objects.get(pk=cusid)
+    sells = sellStockModel.objects.filter(customer__contains = customer.customer).order_by('time')
+
+    totalamount = 0
+    totalbosta  = 0
+
+    for each in sells:
+        totalamount += each.amount
+        totalbosta  += each.bosta
+
+    data = {
+        'sells' : sells,
+        'totalamount' : totalamount,
+        'totalbosta' : totalbosta
+    }
+
+    template = get_template('customerprofilepdf.html')
+    dataa = template.render(data)
+    response = BytesIO()
+
+    pdfPage = pisa.pisaDocument(BytesIO(dataa.encode("UTF-8")), response)
+
+    if not pdfPage.err:
+        return HttpResponse(response.getvalue(), content_type="application/pdf")
+    else:
+        return HttpResponse("Error")

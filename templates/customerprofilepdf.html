@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Rice</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Amount (kg)</th>
+                            <th scope="col">Bosta</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                            {% for each in sells %}
+                                <tr>
+                                    <th class="text-primary" scope="row">{{ each.customer }}</th>
+                                    <td> {{ each.rice }} </td>
+                                    <td>{{ each.time|date:'d-M-D-Y, h:i a' }}</td>
+                                    <th>{{ each.amount }}</th>
+                                    <th>{{ each.bosta }}</th>
+                                </tr>
+                            {% endfor %}
+    
+                            <tr>
+                                <th scope="row"></th>
+                                <td></td>
+                                <th>Total</th>
+                                <th>{{ totalamount }}</th>
+                                <th>{{ totalbosta }}</th>
+                            </tr>
+                       
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

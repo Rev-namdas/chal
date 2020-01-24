@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card" style="width: auto;">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Rice</th>
+                            <th scope="col">Sold to</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Amount (kg)</th>
+                            <th scope="col">Bosta</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                            {% for each in sells %}
+                                <tr>
+                                    <th scope="row">{{ each.rice }}</th>
+                                    <th scope="row"><a href="{% url 'customerprofile' each.id %}">{{ each.customer }}</a></th>
+                                    <th scope="row">{{ each.time|date:'d-M-D-Y, h:i a' }}</th>
+                                    <th scope="row">{{ each.amount }}</th>
+                                    <th scope="row">{{ each.bosta }}</th>
+                                </tr>
+                            {% endfor %}
+    
+                            <tr>
+                                <th scope="row"></th>
+                                <td></td>
+                                <th>Total</th>
+                                <th>{{ totalamount }}</th>
+                                <th>{{ totalbosta }}</th>
+                            </tr>
+                       
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
