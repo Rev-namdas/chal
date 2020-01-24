@@ -199,4 +199,52 @@ def productwisereport(request):
             ctotalbosta  += each.bosta
         return render(request, 'productwisereport.html',
             {'sellscustomer' : sellscustomer, 'ctotalamount' : ctotalamount, 'ctotalbosta' : ctotalbosta})
+
+
+
+def customerprofile(request, cid):
+    customer = sellStockModel.objects.get(pk=cid)
+
+    sells = sellStockModel.objects.filter(customer__contains = customer.customer).order_by('time')
+
+    startingdate    = "2020-01-01"
+    finishingdate   = "2050-01-01"
+
+    totalamount = 0
+    totalbosta  = 0
+
+    for each in sells:
+        totalamount += each.amount
+        totalbosta  += each.bosta
+
+    if request.method == 'POST':
+        totalamount = 0
+        totalbosta  = 0
+
+        fromdate    = request.POST['date1']
+        todate      = request.POST['date2']
+        if fromdate:
+            startingdate    = fromdate
+        else:
+            startingdate    = "2020-01-01"
+
+        if todate:
+            newtodate       = datetime.strptime(todate, '%Y-%m-%d').date()
+            finishingdate   = newtodate + timedelta(days=1)
+        else:
+            finishingdate   = "2050-01-01"
+        
+        
+
+        newsells = sells.filter(time__range=[startingdate, finishingdate]).order_by('time')
+
+        for each in newsells:
+            totalamount += each.amount
+            totalbosta  += each.bosta
+            
+        return render(request, 'customerprofile.html', 
+            {'sells' : newsells, 'totalamount' : totalamount, 'totalbosta' : totalbosta})
+
+    return render(request, 'customerprofile.html',
+            {'sells' : sells, 'totalamount' : totalamount, 'totalbosta' : totalbosta})
             

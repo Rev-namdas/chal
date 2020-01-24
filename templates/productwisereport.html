@@ -14,7 +14,7 @@
         <a class="nav-link" id="navlink" href="{% url 'addproduct' %}">Add Product</a>
     </li>
     <li class="nav-item">
-        <div class="dropleft">
+        <div class="dropdown">
             <a class="nav-link dropdown-toggle" id="navlink"  
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report</a>
     
@@ -83,7 +83,7 @@
                             {% for each in sellscustomer %}
                                 <tr>
                                     <th scope="row">{{ each.rice }}</th>
-                                    <td>{{ each.customer }}</td>
+                                    <td><a href="{% url 'customerprofile' each.id %}">{{ each.customer }}</a></td>
                                     <td>{{ each.time|date:'d-M-D-Y, h:i a' }}</td>
                                     <td>{{ each.amount }}</td>
                                     <td>{{ each.bosta }}</td>
